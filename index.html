@@ -412,7 +412,7 @@
                 07:00 - 08:00
             </div>
             <div class="detail-task">
-                Nội dung hôm qua (Xem lại)
+                Xem lại nội dung chính hôm qua
             </div>
         </div>
 
@@ -491,17 +491,13 @@
 </div>
 
 <script>
-    initNotification2();
+    initNotification('Áp dụng Thời Khóa Biểu nhé!');
 
     let x = setInterval(function() {
 
-        // let hours = new Date().getHours();
-        // let minutes = new Date().getMinutes();
-        // let seconds = new Date().getSeconds();
-
-        let hours = 5;
-        let minutes = 0;
-        let seconds = 0;
+        let hours = new Date().getHours();
+        let minutes = new Date().getMinutes();
+        let seconds = new Date().getSeconds();
 
         let displayHours = hours.toString().length === 1 ? '0' + hours.toString() : hours.toString();
         let displayMinutes = minutes.toString().length === 1 ? '0' + minutes.toString() : minutes.toString();
@@ -550,130 +546,123 @@
         if(hours >= 5 && hours < 6) {
             document.getElementById('task-item_1').classList.add('active');
             if(hours === 5 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[05:00 - 06:00] - Tập thể dục 🏃‍♂');
             }
         }
         else if(hours >= 6 && hours < 7) {
             document.getElementById('task-item_2').classList.add('active');
             if(hours === 6 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[06:00 - 07:00] - Ăn sáng 🍔');
             }
         }
         else if(hours >= 7 && hours < 8) {
             document.getElementById('task-item_3').classList.add('active');
             if(hours === 7 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[07:00 - 08:00] - Xem lại nội dung chính hôm qua 📖');
             }
         }
         else if(hours >= 8 && hours < 11) {
             document.getElementById('task-item_4').classList.add('active');
             if(hours === 8 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[07:00 - 08:00] - Nội dung chính 🌻');
             }
         }
         else if(hours >= 11 && hours < 12) {
             document.getElementById('task-item_5').classList.add('active');
             if(hours === 11 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[11:00 - 12:00] - Ăn trưa 🍔');
             }
         }
         else if(hours >= 12 && hours < 13) {
             document.getElementById('task-item_6').classList.add('active');
             if(hours === 12 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[12:00 - 13:00] - Nghỉ trưa 📺');
             }
         }
         else if(hours >= 13 && hours < 16) {
             document.getElementById('task-item_7').classList.add('active');
             if(hours === 13 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[13:00 - 16:00] - Nội dung chính 🌻');
             }
         }
         else if(hours >= 16 && hours < 17) {
             document.getElementById('task-item_8').classList.add('active');
             if(hours === 16 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[16:00 - 17:00] - Tổng kết nội dung chính trong ngày 📗');
             }
         }
         else if(hours >= 17 && hours < 20) {
             document.getElementById('task-item_9').classList.add('active');
             if(hours === 17 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[17:00 - 20:00] - Ăn tối, giải trí 🍔🎧');
             }
         }
         else if(hours >= 20 && hours < 21) {
             document.getElementById('task-item_10').classList.add('active');
             if(hours === 20 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[20:00 - 21:00] - Tiếng Anh 📖');
             }
         }
         else if(hours >= 21 && hours < 22) {
             document.getElementById('task-item_11').classList.add('active');
             if(hours === 21 && minutes === 0 && seconds === 0) {
-                initNotification();
+                initNotification('[21:00 - 22:00] - Chuẩn bị nội dung chính cho ngày mai 📒');
             }
         }
 
     }, 1000);
-    function initNotification() {
-
-    }
-    function initNotification2() {
-        console.log('play')
+    function initNotification(message = '') {
         const showNotification = () => {
             // create a new notification
-            const notification = new Notification('JavaScript Notification API', {
-                body: 'This is a JavaScript Notification API demo',
+            const notification = new Notification('Thông báo từ Thời Khóa Biểu', {
+                body: message,
                 icon: 'icon.jpg'
             });
 
             // close the notification after 10 seconds
-            // setTimeout(() => {
-            //     notification.close();
-            // }, 10 * 1000);
+            setTimeout(() => {
+                notification.close();
+            }, 10 * 1000);
 
             // navigate to a URL when clicked
             notification.addEventListener('click', () => {
 
-                window.open('file:///D:/TAI_LIEU/TAI_LIEU_HOC_TAP/LAP_TRINH/JAVASCRIPT/time/time.html', '_blank');
+                window.open('https://van-tan-15081998.github.io/thoikhoabieu/', '_self');
             });
         }
 
-        // check notification permission
-
-        // show notification or error
         showNotification();
     }
 
-    function notifyMe() {
-        if (!window.Notification) {
-            console.log('Browser does not support notifications.');
-        } else {
-            // check if permission is already granted
-            if (Notification.permission === 'granted') {
-                // show notification here
-                var notify = new Notification('Hi there!', {
-                    body: 'How are you doing?',
-                    icon: 'https://bit.ly/2DYqRrh',
-                });
-            } else {
-                // request permission from user
-                Notification.requestPermission().then(function (p) {
-                    if (p === 'granted') {
-                        // show notification here
-                        var notify = new Notification('Hi there!', {
-                            body: 'How are you doing?',
-                            icon: 'https://bit.ly/2DYqRrh',
-                        });
-                    } else {
-                        console.log('User blocked notifications.');
-                    }
-                }).catch(function (err) {
-                    console.error(err);
-                });
-            }
-        }
-    }
+    // function notifyMe() {
+    //     if (!window.Notification) {
+    //         console.log('Browser does not support notifications.');
+    //     } else {
+    //         // check if permission is already granted
+    //         if (Notification.permission === 'granted') {
+    //             // show notification here
+    //             var notify = new Notification('Hi there!', {
+    //                 body: 'How are you doing?',
+    //                 icon: 'https://bit.ly/2DYqRrh',
+    //             });
+    //         } else {
+    //             // request permission from user
+    //             Notification.requestPermission().then(function (p) {
+    //                 if (p === 'granted') {
+    //                     // show notification here
+    //                     var notify = new Notification('Hi there!', {
+    //                         body: 'How are you doing?',
+    //                         icon: 'https://bit.ly/2DYqRrh',
+    //                     });
+    //                 } else {
+    //                     console.log('User blocked notifications.');
+    //                 }
+    //             }).catch(function (err) {
+    //                 console.error(err);
+    //             });
+    //         }
+    //     }
+    // }
 </script>
 </body>
 </html>
