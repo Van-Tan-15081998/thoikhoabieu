@@ -1,5 +1,6 @@
 <html>
 <head>
+    <title>Thời Khóa Biểu</title>
     <style lang="css">
         * {
             padding: 0px;
@@ -530,188 +531,188 @@
 <script>
     initNotification('Áp dụng Thời Khóa Biểu nhé!');
 
-    let x = setInterval(function() {
-
-        let hours = new Date().getHours();
-        let minutes = new Date().getMinutes();
-        let seconds = new Date().getSeconds();
-
-        let displayHours = hours.toString().length === 1 ? '0' + hours.toString() : hours.toString();
-        let displayMinutes = minutes.toString().length === 1 ? '0' + minutes.toString() : minutes.toString();
-        let displaySeconds = seconds.toString().length === 1 ? '0' + seconds.toString() : seconds.toString();
-
-        document.getElementById("_hours").innerHTML = displayHours;
-        document.getElementById("_minutes").innerHTML = displayMinutes;
-        document.getElementById("_seconds").innerHTML = displaySeconds;
-
-        let distance = hours * 3600 + minutes * 60 + seconds;
-
-        let distancePercent = (distance/86400) * 100;
-
-        document.getElementById("tiger").style.left = distancePercent.toString() + '%';
-
-        for(let i = 1; i < 25 ; i++) {
-            if(i <= hours) {
-                document.getElementById('hours-time-range_' + i).classList.add('active');
-            } else {
-                document.getElementById('hours-time-range_' + i).classList.remove('active');
-            }
-        }
-
-        for(let i = 1; i < 61 ; i++) {
-            if(i <= minutes) {
-                document.getElementById('minutes-time-range_' + i).classList.add('active');
-            } else {
-                document.getElementById('minutes-time-range_' + i).classList.remove('active');
-            }
-        }
-
-        for(let i = 1; i < 61 ; i++) {
-            if(i <= seconds) {
-                document.getElementById('seconds-time-range_' + i).classList.add('active');
-            } else {
-                document.getElementById('seconds-time-range_' + i).classList.remove('active');
-            }
-        }
-
-        for(let i = 1; i < 12; i++) {
-            document.getElementById('task-item_' + i).classList.remove('active');
-        }
-
-        if(hours >= 5 && hours < 6) {
-            document.getElementById('task-item_1').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_1').style.width = processing + '%';
-
-            if(hours === 5 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[05:00 - 06:00] - Tập thể dục 🏃‍♂');
-            }
-        }
-        else if(hours >= 6 && hours < 7) {
-            document.getElementById('task-item_2').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_2').style.width = processing + '%';
-
-            if(hours === 6 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[06:00 - 07:00] - Ăn sáng 🍔');
-            }
-        }
-        else if(hours >= 7 && hours < 8) {
-            document.getElementById('task-item_3').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_3').style.width = processing + '%';
-
-            if(hours === 7 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[07:00 - 08:00] - Xem lại nội dung chính hôm qua 📖');
-            }
-        }
-        else if(hours >= 8 && hours < 11) {
-            document.getElementById('task-item_4').classList.add('active');
-
-            let processing = hours === 8 ? (minutes / 180) * 100 : ((hours - 8) * 60 + minutes) / 180 * 100;
-            document.getElementById('processing_4').style.width = processing + '%';
-
-            if(hours === 8 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[07:00 - 08:00] - Nội dung chính 🌻');
-            }
-        }
-        else if(hours >= 11 && hours < 12) {
-            document.getElementById('task-item_5').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_5').style.width = processing + '%';
-
-            if(hours === 11 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[11:00 - 12:00] - Ăn trưa 🍔');
-            }
-        }
-        else if(hours >= 12 && hours < 13) {
-            document.getElementById('task-item_6').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_6').style.width = processing + '%';
-
-            if(hours === 12 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[12:00 - 13:00] - Nghỉ trưa 📺');
-            }
-        }
-        else if(hours >= 13 && hours < 16) {
-            document.getElementById('task-item_7').classList.add('active');
-
-            let processing = hours === 13 ? (minutes / 180) * 100 : ((hours - 13) * 60 + minutes) / 180 * 100;;
-            document.getElementById('processing_7').style.width = processing + '%';
-
-            if(hours === 13 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[13:00 - 16:00] - Nội dung chính 🌻');
-            }
-        }
-        else if(hours >= 16 && hours < 17) {
-            document.getElementById('task-item_8').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_8').style.width = processing + '%';
-
-            if(hours === 16 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[16:00 - 17:00] - Tổng kết nội dung chính trong ngày 📗');
-            }
-        }
-        else if(hours >= 17 && hours < 20) {
-            document.getElementById('task-item_9').classList.add('active');
-
-            let processing = hours === 17 ? (minutes / 180) * 100 : ((hours - 17) * 60 + minutes) / 180 * 100;;
-            document.getElementById('processing_9').style.width = processing + '%';
-
-            if(hours === 17 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[17:00 - 20:00] - Ăn tối, giải trí 🍔🎧');
-            }
-        }
-        else if(hours >= 20 && hours < 21) {
-            document.getElementById('task-item_10').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_10').style.width = processing + '%';
-
-            if(hours === 20 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[20:00 - 21:00] - Tiếng Anh 📖');
-            }
-        }
-        else if(hours >= 21 && hours < 22) {
-            document.getElementById('task-item_11').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_11').style.width = processing + '%';
-
-            if(hours === 21 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[21:00 - 22:00] - Chuẩn bị nội dung chính cho ngày mai 📒');
-            }
-        }
-        else if(hours >= 22 && hours < 23) {
-            document.getElementById('task-item_12').classList.add('active');
-
-            let processing = (minutes/60) * 100;
-            document.getElementById('processing_12').style.width = processing + '%';
-
-            if(hours === 23 && minutes === 0 && seconds === 0) {
-                console.log(hours,minutes,seconds);
-                initNotification('[22:00 - 23:00] - Đọc sách & Vệ sinh cá nhân & Chuẩn bị ngủ 🌛');
-            }
-        }
-
-    }, 1000);
+    // let x = setInterval(function() {
+    //
+    //     let hours = new Date().getHours();
+    //     let minutes = new Date().getMinutes();
+    //     let seconds = new Date().getSeconds();
+    //
+    //     let displayHours = hours.toString().length === 1 ? '0' + hours.toString() : hours.toString();
+    //     let displayMinutes = minutes.toString().length === 1 ? '0' + minutes.toString() : minutes.toString();
+    //     let displaySeconds = seconds.toString().length === 1 ? '0' + seconds.toString() : seconds.toString();
+    //
+    //     document.getElementById("_hours").innerHTML = displayHours;
+    //     document.getElementById("_minutes").innerHTML = displayMinutes;
+    //     document.getElementById("_seconds").innerHTML = displaySeconds;
+    //
+    //     let distance = hours * 3600 + minutes * 60 + seconds;
+    //
+    //     let distancePercent = (distance/86400) * 100;
+    //
+    //     document.getElementById("tiger").style.left = distancePercent.toString() + '%';
+    //
+    //     for(let i = 1; i < 25 ; i++) {
+    //         if(i <= hours) {
+    //             document.getElementById('hours-time-range_' + i).classList.add('active');
+    //         } else {
+    //             document.getElementById('hours-time-range_' + i).classList.remove('active');
+    //         }
+    //     }
+    //
+    //     for(let i = 1; i < 61 ; i++) {
+    //         if(i <= minutes) {
+    //             document.getElementById('minutes-time-range_' + i).classList.add('active');
+    //         } else {
+    //             document.getElementById('minutes-time-range_' + i).classList.remove('active');
+    //         }
+    //     }
+    //
+    //     for(let i = 1; i < 61 ; i++) {
+    //         if(i <= seconds) {
+    //             document.getElementById('seconds-time-range_' + i).classList.add('active');
+    //         } else {
+    //             document.getElementById('seconds-time-range_' + i).classList.remove('active');
+    //         }
+    //     }
+    //
+    //     for(let i = 1; i < 12; i++) {
+    //         document.getElementById('task-item_' + i).classList.remove('active');
+    //     }
+    //
+    //     if(hours >= 5 && hours < 6) {
+    //         document.getElementById('task-item_1').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_1').style.width = processing + '%';
+    //
+    //         if(hours === 5 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[05:00 - 06:00] - Tập thể dục 🏃‍♂');
+    //         }
+    //     }
+    //     else if(hours >= 6 && hours < 7) {
+    //         document.getElementById('task-item_2').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_2').style.width = processing + '%';
+    //
+    //         if(hours === 6 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[06:00 - 07:00] - Ăn sáng 🍔');
+    //         }
+    //     }
+    //     else if(hours >= 7 && hours < 8) {
+    //         document.getElementById('task-item_3').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_3').style.width = processing + '%';
+    //
+    //         if(hours === 7 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[07:00 - 08:00] - Xem lại nội dung chính hôm qua 📖');
+    //         }
+    //     }
+    //     else if(hours >= 8 && hours < 11) {
+    //         document.getElementById('task-item_4').classList.add('active');
+    //
+    //         let processing = hours === 8 ? (minutes / 180) * 100 : ((hours - 8) * 60 + minutes) / 180 * 100;
+    //         document.getElementById('processing_4').style.width = processing + '%';
+    //
+    //         if(hours === 8 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[07:00 - 08:00] - Nội dung chính 🌻');
+    //         }
+    //     }
+    //     else if(hours >= 11 && hours < 12) {
+    //         document.getElementById('task-item_5').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_5').style.width = processing + '%';
+    //
+    //         if(hours === 11 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[11:00 - 12:00] - Ăn trưa 🍔');
+    //         }
+    //     }
+    //     else if(hours >= 12 && hours < 13) {
+    //         document.getElementById('task-item_6').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_6').style.width = processing + '%';
+    //
+    //         if(hours === 12 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[12:00 - 13:00] - Nghỉ trưa 📺');
+    //         }
+    //     }
+    //     else if(hours >= 13 && hours < 16) {
+    //         document.getElementById('task-item_7').classList.add('active');
+    //
+    //         let processing = hours === 13 ? (minutes / 180) * 100 : ((hours - 13) * 60 + minutes) / 180 * 100;;
+    //         document.getElementById('processing_7').style.width = processing + '%';
+    //
+    //         if(hours === 13 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[13:00 - 16:00] - Nội dung chính 🌻');
+    //         }
+    //     }
+    //     else if(hours >= 16 && hours < 17) {
+    //         document.getElementById('task-item_8').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_8').style.width = processing + '%';
+    //
+    //         if(hours === 16 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[16:00 - 17:00] - Tổng kết nội dung chính trong ngày 📗');
+    //         }
+    //     }
+    //     else if(hours >= 17 && hours < 20) {
+    //         document.getElementById('task-item_9').classList.add('active');
+    //
+    //         let processing = hours === 17 ? (minutes / 180) * 100 : ((hours - 17) * 60 + minutes) / 180 * 100;;
+    //         document.getElementById('processing_9').style.width = processing + '%';
+    //
+    //         if(hours === 17 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[17:00 - 20:00] - Ăn tối, giải trí 🍔🎧');
+    //         }
+    //     }
+    //     else if(hours >= 20 && hours < 21) {
+    //         document.getElementById('task-item_10').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_10').style.width = processing + '%';
+    //
+    //         if(hours === 20 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[20:00 - 21:00] - Tiếng Anh 📖');
+    //         }
+    //     }
+    //     else if(hours >= 21 && hours < 22) {
+    //         document.getElementById('task-item_11').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_11').style.width = processing + '%';
+    //
+    //         if(hours === 21 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[21:00 - 22:00] - Chuẩn bị nội dung chính cho ngày mai 📒');
+    //         }
+    //     }
+    //     else if(hours >= 22 && hours < 23) {
+    //         document.getElementById('task-item_12').classList.add('active');
+    //
+    //         let processing = (minutes / 60) * 100;
+    //         document.getElementById('processing_12').style.width = processing + '%';
+    //
+    //         if(hours === 23 && minutes === 0 && seconds === 0) {
+    //             console.log(hours,minutes,seconds);
+    //             initNotification('[22:00 - 23:00] - Đọc sách & Vệ sinh cá nhân & Chuẩn bị ngủ 🌛');
+    //         }
+    //     }
+    //
+    // }, 1000);
     function initNotification(message = '') {
         const showNotification = () => {
             // create a new notification
@@ -723,7 +724,7 @@
             // close the notification after 10 seconds
             setTimeout(() => {
                 notification.close();
-            }, 50 * 1000);
+            }, 50000);
 
             // navigate to a URL when clicked
             notification.addEventListener('click', () => {
