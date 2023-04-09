@@ -206,7 +206,7 @@
 
     </style>
 </head>
-<body onload="notifyMe()">
+<body>
 <div class="full-page">
     <div class="center-clock">
         <div class="hours">
@@ -499,6 +499,10 @@
         let minutes = new Date().getMinutes();
         let seconds = new Date().getSeconds();
 
+        console.log('hours: ',hours)
+        console.log('minutes: ',minutes)
+        console.log('seconds: ',seconds)
+
         let displayHours = hours.toString().length === 1 ? '0' + hours.toString() : hours.toString();
         let displayMinutes = minutes.toString().length === 1 ? '0' + minutes.toString() : minutes.toString();
         let displaySeconds = seconds.toString().length === 1 ? '0' + seconds.toString() : seconds.toString();
@@ -626,7 +630,6 @@
 
             // navigate to a URL when clicked
             notification.addEventListener('click', () => {
-
                 window.open('https://van-tan-15081998.github.io/thoikhoabieu/', '_self');
             });
         }
