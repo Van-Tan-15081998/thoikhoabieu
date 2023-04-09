@@ -541,7 +541,10 @@
             document.getElementById('task-item_' + i).classList.remove('active');
         }
 
-
+        if(hours === 11 && minutes === 35 && seconds === 0) {
+            console.log(hours,minutes,seconds);
+            initNotification('[05:00 - 06:00] - Tập thể dục 🏃‍♂');
+        }
 
         if(hours >= 5 && hours < 6) {
             document.getElementById('task-item_1').classList.add('active');
