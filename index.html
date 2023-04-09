@@ -541,11 +541,6 @@
             document.getElementById('task-item_' + i).classList.remove('active');
         }
 
-        if(hours === 11 && minutes === 35 && seconds === 0) {
-            console.log(hours,minutes,seconds);
-            initNotification('[05:00 - 06:00] - Tập thể dục 🏃‍♂');
-        }
-
         if(hours >= 5 && hours < 6) {
             document.getElementById('task-item_1').classList.add('active');
             if(hours === 5 && minutes === 0 && seconds === 0) {
@@ -628,15 +623,15 @@
     function initNotification(message = '') {
         const showNotification = () => {
             // create a new notification
-            const notification = new Notification('Thông báo từ Thời Khóa Biểu', {
+            const notification = new Notification('Thông báo từ Thời Khóa Biểu ⏰', {
                 body: message,
-                icon: 'icon.jpg'
+                icon: 'tanjiro.jpg'
             });
 
             // close the notification after 10 seconds
             setTimeout(() => {
                 notification.close();
-            }, 10 * 1000);
+            }, 50 * 1000);
 
             // navigate to a URL when clicked
             notification.addEventListener('click', () => {
@@ -646,36 +641,6 @@
 
         showNotification();
     }
-
-    // function notifyMe() {
-    //     if (!window.Notification) {
-    //         console.log('Browser does not support notifications.');
-    //     } else {
-    //         // check if permission is already granted
-    //         if (Notification.permission === 'granted') {
-    //             // show notification here
-    //             var notify = new Notification('Hi there!', {
-    //                 body: 'How are you doing?',
-    //                 icon: 'https://bit.ly/2DYqRrh',
-    //             });
-    //         } else {
-    //             // request permission from user
-    //             Notification.requestPermission().then(function (p) {
-    //                 if (p === 'granted') {
-    //                     // show notification here
-    //                     var notify = new Notification('Hi there!', {
-    //                         body: 'How are you doing?',
-    //                         icon: 'https://bit.ly/2DYqRrh',
-    //                     });
-    //                 } else {
-    //                     console.log('User blocked notifications.');
-    //                 }
-    //             }).catch(function (err) {
-    //                 console.error(err);
-    //             });
-    //         }
-    //     }
-    // }
 </script>
 </body>
 </html>
