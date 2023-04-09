@@ -576,7 +576,7 @@
             }
         }
 
-        for(let i = 1; i < 12; i++) {
+        for(let i = 1; i < 13; i++) {
             document.getElementById('task-item_' + i).classList.remove('active');
         }
 
@@ -728,9 +728,9 @@
             }, 10000);
 
             // navigate to a URL when clicked
-            // notification.addEventListener('click', () => {
-            //     window.open('https://van-tan-15081998.github.io/thoikhoabieu/', '_self');
-            // });
+            notification.addEventListener('click', () => {
+                window.open('https://van-tan-15081998.github.io/thoikhoabieu/', '_self');
+            });
         }
 
         showNotification();
