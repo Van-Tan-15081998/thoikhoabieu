@@ -1,0 +1,679 @@
+<html>
+<head>
+    <style lang="css">
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+        .full-page {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #2A2C2B;
+            overflow: hidden;
+        }
+        .center-clock {
+            position: absolute;
+            width: 400px;
+            height: 150px;
+            background-color: #64AFF7;
+            left: 50%;
+            top: calc(50% - 220px);
+            transform: translateX(-50%) translateY(-50%);
+            border-radius: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hours, .minutes, .seconds {
+            width: 80px;
+            height: 80px;
+            background-color: #CFFCF6;
+            border-radius: 10px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            line-height: 60px;
+        }
+        .hours #_hours, .minutes #_minutes, .seconds #_seconds {
+            font-size: 70px;
+            font-weight: bold;
+            font-family: Calibri;
+            color: #1A1A1A;
+        }
+        .distance {
+            width: 10px;
+            height: 60px;
+            margin: 0px 5px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            line-height: 60px;
+
+            font-size: 70px;
+            font-family: Calibri;
+            font-weight: bold;
+        }
+
+        .time-line {
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            top: calc(50% - 6px);
+            background-color: #64AFF7;
+        }
+        #tiger {
+            position: absolute;
+            left: 0%;
+            top: calc(50% - 65px);
+            transform: rotateY(180deg);
+            font-size: 50px;
+            transition: 0.1s;
+            z-index: 9999;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .start-point {
+            position: absolute;
+            left: 0%;
+            top: calc(50% - 65px);
+            font-size: 40px;
+            z-index: 1111;
+        }
+        .end-point {
+            position: absolute;
+            right: 0%;
+            top: calc(50% - 65px);
+            font-size: 40px;
+            z-index: 1111;
+        }
+
+        .time-range {
+            position: absolute;
+            height: 110px;
+            width: auto;
+            top: 50%;
+            padding: 10px;
+        }
+
+        .hours-time-range, .minutes-time-range, .seconds-time-range {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .hours-time-range .item {
+            height: 40px;
+            width: 30px;
+            background-color: #CFFCF6;
+            margin-right: 1px;
+            transition: 0.1s;
+            border-radius: 5px;
+            opacity: 0.2;
+        }
+        .minutes-time-range .item {
+            height: 30px;
+            width: 11px;
+            background-color: #CFFCF6;
+            margin-right: 1px;
+            transition: 0.1s;
+            border-radius: 3px;
+            opacity: 0.2;
+        }
+        .seconds-time-range .item {
+            height: 25px;
+            width: 11px;
+            background-color: #CFFCF6;
+            margin-right: 1px;
+            transition: 0.1s;
+            border-radius: 3px;
+            opacity: 0.2;
+        }
+
+        .hours-time-range .item.active {
+            background-color: dodgerblue;
+            opacity: 1;
+        }
+        .minutes-time-range .item.active {
+            background-color: #F1DD00;
+            opacity: 1;
+        }
+        .seconds-time-range .item.active {
+            background-color: lime;
+            opacity: 1;
+        }
+
+        .task-list {
+            position: absolute;
+            height: 110px;
+            width: auto;
+            top: 70%;
+            padding: 10px;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+            align-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .task-list .task-item {
+            width: 200px;
+            height: 80px;
+            background-color: #4B5553;
+            border: 1px solid #555555;
+            border-radius: 5px;
+            padding: 5px;
+            font-family: Calibri;
+            margin: 5px 5px 5px 0px;
+            opacity: 0.8;
+        }
+
+        .task-list .task-item .time {
+            height: 30px;
+            color: #F1DD00;
+            font-size: 20px;
+        }
+
+        .task-list .task-item .detail-task {
+            color: #DDDBDD;
+            font-size: 18px;
+        }
+
+        .task-list .task-item.active {
+            border: 2px solid #1A1A1A;
+            background-color: white;
+            opacity: 1;
+        }
+        .task-list .task-item.active .time{
+            color: #1A1A1A;
+            font-weight: bold;
+        }
+        .task-list .task-item.active .detail-task{
+            color: #1A1A1A;
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body onload="notifyMe()">
+<div class="full-page">
+    <div class="center-clock">
+        <div class="hours">
+            <p id="_hours"></p>
+        </div>
+        <div class="distance">
+            <p>:</p>
+        </div>
+        <div class="minutes">
+            <p id="_minutes"></p>
+        </div>
+        <div class="distance">
+            <p>:</p>
+        </div>
+        <div class="seconds">
+            <p id="_seconds"></p>
+        </div>
+    </div>
+
+    <div class="time-line">
+        <div></div>
+        <div id="tiger">
+            🐅
+        </div>
+        <div class="start-point">🚩</div>
+        <div class="end-point">🏁</div>
+    </div>
+
+    <div class="time-range">
+        <div class="hours-time-range">
+            <div id="hours-time-range_1" class="item"></div>
+            <div id="hours-time-range_2" class="item"></div>
+            <div id="hours-time-range_3" class="item"></div>
+            <div id="hours-time-range_4" class="item"></div>
+            <div id="hours-time-range_5" class="item"></div>
+            <div id="hours-time-range_6" class="item"></div>
+            <div id="hours-time-range_7" class="item"></div>
+            <div id="hours-time-range_8" class="item"></div>
+            <div id="hours-time-range_9" class="item"></div>
+            <div id="hours-time-range_10" class="item"></div>
+            <div id="hours-time-range_11" class="item"></div>
+            <div id="hours-time-range_12" class="item"></div>
+            <div id="hours-time-range_13" class="item"></div>
+            <div id="hours-time-range_14" class="item"></div>
+            <div id="hours-time-range_15" class="item"></div>
+            <div id="hours-time-range_16" class="item"></div>
+            <div id="hours-time-range_17" class="item"></div>
+            <div id="hours-time-range_18" class="item"></div>
+            <div id="hours-time-range_19" class="item"></div>
+            <div id="hours-time-range_20" class="item"></div>
+            <div id="hours-time-range_21" class="item"></div>
+            <div id="hours-time-range_22" class="item"></div>
+            <div id="hours-time-range_23" class="item"></div>
+            <div id="hours-time-range_24" class="item"></div>
+        </div>
+        <div class="minutes-time-range">
+            <div id="minutes-time-range_1" class="item"></div>
+            <div id="minutes-time-range_2" class="item"></div>
+            <div id="minutes-time-range_3" class="item"></div>
+            <div id="minutes-time-range_4" class="item"></div>
+            <div id="minutes-time-range_5" class="item"></div>
+            <div id="minutes-time-range_6" class="item"></div>
+            <div id="minutes-time-range_7" class="item"></div>
+            <div id="minutes-time-range_8" class="item"></div>
+            <div id="minutes-time-range_9" class="item"></div>
+            <div id="minutes-time-range_10" class="item"></div>
+            <div id="minutes-time-range_11" class="item"></div>
+            <div id="minutes-time-range_12" class="item"></div>
+            <div id="minutes-time-range_13" class="item"></div>
+            <div id="minutes-time-range_14" class="item"></div>
+            <div id="minutes-time-range_15" class="item"></div>
+            <div id="minutes-time-range_16" class="item"></div>
+            <div id="minutes-time-range_17" class="item"></div>
+            <div id="minutes-time-range_18" class="item"></div>
+            <div id="minutes-time-range_19" class="item"></div>
+            <div id="minutes-time-range_20" class="item"></div>
+            <div id="minutes-time-range_21" class="item"></div>
+            <div id="minutes-time-range_22" class="item"></div>
+            <div id="minutes-time-range_23" class="item"></div>
+            <div id="minutes-time-range_24" class="item"></div>
+            <div id="minutes-time-range_25" class="item"></div>
+            <div id="minutes-time-range_26" class="item"></div>
+            <div id="minutes-time-range_27" class="item"></div>
+            <div id="minutes-time-range_28" class="item"></div>
+            <div id="minutes-time-range_29" class="item"></div>
+            <div id="minutes-time-range_30" class="item"></div>
+            <div id="minutes-time-range_31" class="item"></div>
+            <div id="minutes-time-range_32" class="item"></div>
+            <div id="minutes-time-range_33" class="item"></div>
+            <div id="minutes-time-range_34" class="item"></div>
+            <div id="minutes-time-range_35" class="item"></div>
+            <div id="minutes-time-range_36" class="item"></div>
+            <div id="minutes-time-range_37" class="item"></div>
+            <div id="minutes-time-range_38" class="item"></div>
+            <div id="minutes-time-range_39" class="item"></div>
+            <div id="minutes-time-range_40" class="item"></div>
+            <div id="minutes-time-range_41" class="item"></div>
+            <div id="minutes-time-range_42" class="item"></div>
+            <div id="minutes-time-range_43" class="item"></div>
+            <div id="minutes-time-range_44" class="item"></div>
+            <div id="minutes-time-range_45" class="item"></div>
+            <div id="minutes-time-range_46" class="item"></div>
+            <div id="minutes-time-range_47" class="item"></div>
+            <div id="minutes-time-range_48" class="item"></div>
+            <div id="minutes-time-range_49" class="item"></div>
+            <div id="minutes-time-range_50" class="item"></div>
+            <div id="minutes-time-range_51" class="item"></div>
+            <div id="minutes-time-range_52" class="item"></div>
+            <div id="minutes-time-range_53" class="item"></div>
+            <div id="minutes-time-range_54" class="item"></div>
+            <div id="minutes-time-range_55" class="item"></div>
+            <div id="minutes-time-range_56" class="item"></div>
+            <div id="minutes-time-range_57" class="item"></div>
+            <div id="minutes-time-range_58" class="item"></div>
+            <div id="minutes-time-range_59" class="item"></div>
+            <div id="minutes-time-range_60" class="item"></div>
+        </div>
+        <div class="seconds-time-range">
+            <div id="seconds-time-range_1" class="item"></div>
+            <div id="seconds-time-range_2" class="item"></div>
+            <div id="seconds-time-range_3" class="item"></div>
+            <div id="seconds-time-range_4" class="item"></div>
+            <div id="seconds-time-range_5" class="item"></div>
+            <div id="seconds-time-range_6" class="item"></div>
+            <div id="seconds-time-range_7" class="item"></div>
+            <div id="seconds-time-range_8" class="item"></div>
+            <div id="seconds-time-range_9" class="item"></div>
+            <div id="seconds-time-range_10" class="item"></div>
+            <div id="seconds-time-range_11" class="item"></div>
+            <div id="seconds-time-range_12" class="item"></div>
+            <div id="seconds-time-range_13" class="item"></div>
+            <div id="seconds-time-range_14" class="item"></div>
+            <div id="seconds-time-range_15" class="item"></div>
+            <div id="seconds-time-range_16" class="item"></div>
+            <div id="seconds-time-range_17" class="item"></div>
+            <div id="seconds-time-range_18" class="item"></div>
+            <div id="seconds-time-range_19" class="item"></div>
+            <div id="seconds-time-range_20" class="item"></div>
+            <div id="seconds-time-range_21" class="item"></div>
+            <div id="seconds-time-range_22" class="item"></div>
+            <div id="seconds-time-range_23" class="item"></div>
+            <div id="seconds-time-range_24" class="item"></div>
+            <div id="seconds-time-range_25" class="item"></div>
+            <div id="seconds-time-range_26" class="item"></div>
+            <div id="seconds-time-range_27" class="item"></div>
+            <div id="seconds-time-range_28" class="item"></div>
+            <div id="seconds-time-range_29" class="item"></div>
+            <div id="seconds-time-range_30" class="item"></div>
+            <div id="seconds-time-range_31" class="item"></div>
+            <div id="seconds-time-range_32" class="item"></div>
+            <div id="seconds-time-range_33" class="item"></div>
+            <div id="seconds-time-range_34" class="item"></div>
+            <div id="seconds-time-range_35" class="item"></div>
+            <div id="seconds-time-range_36" class="item"></div>
+            <div id="seconds-time-range_37" class="item"></div>
+            <div id="seconds-time-range_38" class="item"></div>
+            <div id="seconds-time-range_39" class="item"></div>
+            <div id="seconds-time-range_40" class="item"></div>
+            <div id="seconds-time-range_41" class="item"></div>
+            <div id="seconds-time-range_42" class="item"></div>
+            <div id="seconds-time-range_43" class="item"></div>
+            <div id="seconds-time-range_44" class="item"></div>
+            <div id="seconds-time-range_45" class="item"></div>
+            <div id="seconds-time-range_46" class="item"></div>
+            <div id="seconds-time-range_47" class="item"></div>
+            <div id="seconds-time-range_48" class="item"></div>
+            <div id="seconds-time-range_49" class="item"></div>
+            <div id="seconds-time-range_50" class="item"></div>
+            <div id="seconds-time-range_51" class="item"></div>
+            <div id="seconds-time-range_52" class="item"></div>
+            <div id="seconds-time-range_53" class="item"></div>
+            <div id="seconds-time-range_54" class="item"></div>
+            <div id="seconds-time-range_55" class="item"></div>
+            <div id="seconds-time-range_56" class="item"></div>
+            <div id="seconds-time-range_57" class="item"></div>
+            <div id="seconds-time-range_58" class="item"></div>
+            <div id="seconds-time-range_59" class="item"></div>
+            <div id="seconds-time-range_60" class="item"></div>
+        </div>
+    </div>
+
+    <div class="task-list">
+        <div class="task-item" id="task-item_1">
+            <div class="time">
+                05:00 - 06:00
+            </div>
+            <div class="detail-task">
+                Tập thể dục
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_2">
+            <div class="time">
+                06:00 - 07:00
+            </div>
+            <div class="detail-task">
+                Ăn sáng
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_3">
+            <div class="time">
+                07:00 - 08:00
+            </div>
+            <div class="detail-task">
+                Nội dung hôm qua (Xem lại)
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_4">
+            <div class="time">
+                08:00 - 11:00
+            </div>
+            <div class="detail-task">
+                Nội dung chính
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_5">
+            <div class="time">
+                11:00 - 12:00
+            </div>
+            <div class="detail-task">
+                Ăn trưa
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_6">
+            <div class="time">
+                12:00 - 13:00
+            </div>
+            <div class="detail-task">
+                Nghỉ trưa
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_7">
+            <div class="time">
+                13:00 - 16:00
+            </div>
+            <div class="detail-task">
+                Nội dung chính
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_8">
+            <div class="time">
+                16:00 - 17:00
+            </div>
+            <div class="detail-task">
+                Tổng kết nội dung chính trong ngày
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_9">
+            <div class="time">
+                17:00 - 20:00
+            </div>
+            <div class="detail-task">
+                Ăn tối, giải trí
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_10">
+            <div class="time">
+                20:00 - 21:00
+            </div>
+            <div class="detail-task">
+                Tiếng Anh
+            </div>
+        </div>
+
+        <div class="task-item" id="task-item_11">
+            <div class="time">
+                21:00 - 22:00
+            </div>
+            <div class="detail-task">
+                Chuẩn bị nội dung chính cho ngày mai
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    initNotification2();
+
+    let x = setInterval(function() {
+
+        // let hours = new Date().getHours();
+        // let minutes = new Date().getMinutes();
+        // let seconds = new Date().getSeconds();
+
+        let hours = 5;
+        let minutes = 0;
+        let seconds = 0;
+
+        let displayHours = hours.toString().length === 1 ? '0' + hours.toString() : hours.toString();
+        let displayMinutes = minutes.toString().length === 1 ? '0' + minutes.toString() : minutes.toString();
+        let displaySeconds = seconds.toString().length === 1 ? '0' + seconds.toString() : seconds.toString();
+
+        document.getElementById("_hours").innerHTML = displayHours;
+        document.getElementById("_minutes").innerHTML = displayMinutes;
+        document.getElementById("_seconds").innerHTML = displaySeconds;
+
+        let distance = hours * 3600 + minutes * 60 + seconds;
+
+        let distancePercent = (distance/86400) * 100;
+
+        document.getElementById("tiger").style.left = distancePercent.toString() + '%';
+
+        for(let i = 1; i < 25 ; i++) {
+            if(i <= hours) {
+                document.getElementById('hours-time-range_' + i).classList.add('active');
+            } else {
+                document.getElementById('hours-time-range_' + i).classList.remove('active');
+            }
+        }
+
+        for(let i = 1; i < 61 ; i++) {
+            if(i <= minutes) {
+                document.getElementById('minutes-time-range_' + i).classList.add('active');
+            } else {
+                document.getElementById('minutes-time-range_' + i).classList.remove('active');
+            }
+        }
+
+        for(let i = 1; i < 61 ; i++) {
+            if(i <= seconds) {
+                document.getElementById('seconds-time-range_' + i).classList.add('active');
+            } else {
+                document.getElementById('seconds-time-range_' + i).classList.remove('active');
+            }
+        }
+
+        for(let i = 1; i < 12; i++) {
+            document.getElementById('task-item_' + i).classList.remove('active');
+        }
+
+
+
+        if(hours >= 5 && hours < 6) {
+            document.getElementById('task-item_1').classList.add('active');
+            if(hours === 5 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 6 && hours < 7) {
+            document.getElementById('task-item_2').classList.add('active');
+            if(hours === 6 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 7 && hours < 8) {
+            document.getElementById('task-item_3').classList.add('active');
+            if(hours === 7 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 8 && hours < 11) {
+            document.getElementById('task-item_4').classList.add('active');
+            if(hours === 8 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 11 && hours < 12) {
+            document.getElementById('task-item_5').classList.add('active');
+            if(hours === 11 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 12 && hours < 13) {
+            document.getElementById('task-item_6').classList.add('active');
+            if(hours === 12 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 13 && hours < 16) {
+            document.getElementById('task-item_7').classList.add('active');
+            if(hours === 13 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 16 && hours < 17) {
+            document.getElementById('task-item_8').classList.add('active');
+            if(hours === 16 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 17 && hours < 20) {
+            document.getElementById('task-item_9').classList.add('active');
+            if(hours === 17 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 20 && hours < 21) {
+            document.getElementById('task-item_10').classList.add('active');
+            if(hours === 20 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+        else if(hours >= 21 && hours < 22) {
+            document.getElementById('task-item_11').classList.add('active');
+            if(hours === 21 && minutes === 0 && seconds === 0) {
+                initNotification();
+            }
+        }
+
+    }, 1000);
+    function initNotification() {
+
+    }
+    function initNotification2() {
+        console.log('play')
+        const showNotification = () => {
+            // create a new notification
+            const notification = new Notification('JavaScript Notification API', {
+                body: 'This is a JavaScript Notification API demo',
+                icon: 'icon.jpg'
+            });
+
+            // close the notification after 10 seconds
+            // setTimeout(() => {
+            //     notification.close();
+            // }, 10 * 1000);
+
+            // navigate to a URL when clicked
+            notification.addEventListener('click', () => {
+
+                window.open('file:///D:/TAI_LIEU/TAI_LIEU_HOC_TAP/LAP_TRINH/JAVASCRIPT/time/time.html', '_blank');
+            });
+        }
+
+        // check notification permission
+
+        // show notification or error
+        showNotification();
+    }
+
+    function notifyMe() {
+        if (!window.Notification) {
+            console.log('Browser does not support notifications.');
+        } else {
+            // check if permission is already granted
+            if (Notification.permission === 'granted') {
+                // show notification here
+                var notify = new Notification('Hi there!', {
+                    body: 'How are you doing?',
+                    icon: 'https://bit.ly/2DYqRrh',
+                });
+            } else {
+                // request permission from user
+                Notification.requestPermission().then(function (p) {
+                    if (p === 'granted') {
+                        // show notification here
+                        var notify = new Notification('Hi there!', {
+                            body: 'How are you doing?',
+                            icon: 'https://bit.ly/2DYqRrh',
+                        });
+                    } else {
+                        console.log('User blocked notifications.');
+                    }
+                }).catch(function (err) {
+                    console.error(err);
+                });
+            }
+        }
+    }
+</script>
+</body>
+</html>
